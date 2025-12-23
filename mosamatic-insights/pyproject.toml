@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "mosamatic_insights", from = "src"}]
+packages = [{include = "mosamaticinsights", from = "src"}]
 
 #[[tool.poetry.source]]
 #name = "pytorch-cu121"
@@ -24,7 +24,7 @@ packages = [{include = "mosamatic_insights", from = "src"}]
 #priority = "supplemental"
 
 [tool.poetry.scripts]
-mosamatic-insights = "mosamatic_insights.app:main"
+mosamatic-insights = "mosamaticinsights.app:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
