@@ -28,6 +28,7 @@ mosamatic-insights = "mosamatic_insights.app:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
+pyinstaller = "^6.17.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
