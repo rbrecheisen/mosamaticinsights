@@ -4,7 +4,7 @@ from mosamaticinsights.mainwindow import MainWindow
 
 
 def main():
-    QtWidgets.QApplication.setApplicationName('mosamatic-insights')
+    QtWidgets.QApplication.setApplicationName('mosamaticinsights')
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
