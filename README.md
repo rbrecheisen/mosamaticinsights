@@ -27,8 +27,8 @@ Clinical researchers, in principle, know which questions they want to answer. Th
 they know about analysis, reporting and probably visualization of the analysis results. What they may not
 know is how to properly organize data storage. They may know how to do exploratory data analysis on structured
 data but have a very hard time doing the same with unstructured data. They may not know how to properly 
-prepare their data for analysis. All these areas are the domain of data engineering and requires significant 
-programming skills to handle in a reproducible and traceable manner. Stages 1 and 2 are the areas where a 
+prepare their data for analysis. All these areas are the domain of data engineering and require significant 
+programming skills to handle in a reproducible and traceable manner. Stages 1, 2 and 3 are the areas where a 
 data scientist or engineer can contribute the most to the research effort. 
 
 So how do you get clinical research at the surgery lab to a higher level? By letting people do the analyses

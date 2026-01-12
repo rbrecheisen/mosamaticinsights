@@ -10,11 +10,18 @@ requires-python = ">=3.11,<3.12"
 dependencies = [
     "pyside6-essentials>=6.9",
     "pydicom>=3.0.1",
+<<<<<<< HEAD
     "numpy==2.4.1",
     "gdcm",
     "pylibjpeg>=2.0",
     "pylibjpeg-openjpeg>=2.0",
     "pillow>=10.0",
+=======
+    "vtk",
+    #"torch==2.5.1+cu121",
+    #"torchvision==0.20.1",
+    #"torchsummary==1.5.1",
+>>>>>>> 25433379b314e1ceeb45662d6bf730dc3034fcc8
 ]
 
 [tool.poetry]

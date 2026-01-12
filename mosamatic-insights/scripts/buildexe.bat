@@ -3,7 +3,7 @@ setlocal enabledelayedexpansion
 
 REM === CONFIG ===
 set APP_NAME=mosamaticinsights
-set ENTRYPOINT=src\mosamaticinsights\main.py
+set ENTRYPOINT=src\mosamaticinsights\app.py
 set DIST_DIR=dist
 set BUILD_DIR=build
 
@@ -26,6 +26,7 @@ REM Build one-file exe
 poetry run pyinstaller ^
   --name "%APP_NAME%" ^
   --onefile ^
+  --windowed ^
   --clean ^
   --noconfirm ^
   --distpath "%DIST_DIR%" ^
