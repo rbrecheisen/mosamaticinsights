@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, QThread, Signal, Slot
+from PySide6.QtCore import QObject, QThread, Signal, Slot, QCoreApplication
 
 
 class Process(QObject):
@@ -12,6 +12,7 @@ class Process(QObject):
         super().__init__(parent)
         self._cancel = False
         self._thread = None
+        self._main_thread = None
 
     def cancel(self):
         self._cancel = True
@@ -28,15 +29,13 @@ class Process(QObject):
     def start(self):
         if self._thread is not None:
             raise RuntimeError("Process already started")
-
+        self._main_thread = QCoreApplication.instance().thread()
         self._thread = QThread()
         self.moveToThread(self._thread)
-
         self._thread.started.connect(self._run_internal)
         self.finished.connect(self._thread.quit)
         self.failed.connect(self._thread.quit)
         self._thread.finished.connect(self._cleanup)
-
         self._thread.start()
 
     @Slot()
@@ -47,7 +46,6 @@ class Process(QObject):
                 self.canceled.emit()
                 self.finished.emit(None)
                 return
-
             result = self.execute()
             self.finished.emit(result)
         except Exception as e:
@@ -55,6 +53,7 @@ class Process(QObject):
 
     @Slot()
     def _cleanup(self):
-        self.moveToThread(self.thread())  # move back to main thread affinity
+        # self.moveToThread(self.thread())  # move back to main thread affinity
+        self.moveToThread(self._main_thread)
         self._thread.deleteLater()
         self._thread = None

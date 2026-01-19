@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
         self.init_menus()
         self.setWindowTitle('Mosamatic Insights')
         self.setWindowIcon(QIcon(self._settings.get('mainwindow/icon_path')))
+        self._processes = set()
 
     def init_settings(self):
         settings = Settings('nl.rbeesoft', 'mosamaticinsights')
@@ -40,7 +41,8 @@ class MainWindow(QMainWindow):
 
     def open_dicom_folder(self):
         p = DicomAnalyzerProcess()
+        self._processes.add(p)
         p.progress.connect(lambda progress: print(f'progress: {progress}'))
-        p.finished.connect(lambda result: print(f'result: {result}'))
-        p.failed.connect(lambda error: print(error))
+        p.finished.connect(lambda _: self._processes.discard(p))
+        p.failed.connect(lambda _: self._processes.discard(p))
         p.start()
