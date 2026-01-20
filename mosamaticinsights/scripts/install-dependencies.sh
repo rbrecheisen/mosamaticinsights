@@ -7,7 +7,8 @@ mamba install -c conda-forge \
     pydicom \
     pillow \
     opencv \
-    poetry
+    poetry \
+    matplotlib
 
     # Moved to pyproject.toml
     # gdcm \
