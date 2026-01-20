@@ -1,5 +1,5 @@
 [project]
-name = "mosamatic-insights"
+name = "mosamaticinsights"
 version = "0.1.0"
 description = ""
 authors = [
@@ -8,17 +8,6 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
 dependencies = [
-    "pyside6-essentials>=6.9",
-    "pydicom>=3.0.1",
-    "numpy==2.4.1",
-    "gdcm",
-    "pylibjpeg>=2.0",
-    "pylibjpeg-openjpeg>=2.0",
-    "pillow>=10.0",
-    "vtk",
-    #"torch==2.5.1+cu121",
-    #"torchvision==0.20.1",
-    #"torchsummary==1.5.1",
 ]
 
 [tool.poetry]
@@ -30,7 +19,7 @@ packages = [{include = "mosamaticinsights", from = "src"}]
 #priority = "supplemental"
 
 [tool.poetry.scripts]
-mosamatic-insights = "mosamaticinsights.main:main"
+mosamaticinsights = "mosamaticinsights.main:main"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"

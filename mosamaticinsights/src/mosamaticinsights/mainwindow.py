@@ -29,12 +29,14 @@ class MainWindow(QMainWindow):
         return settings
     
     def init_menus(self):
-        # Application
+
+        # Application menu
         app_menu_action = QAction('Exit', self)
         app_menu_action.triggered.connect(self.close)
         app_menu = self.menuBar().addMenu('Application')
         app_menu.addAction(app_menu_action)
-        # Data
+        
+        # Data menu
         data_menu_open_action = QAction('Open DICOM Folder', self)
         data_menu_open_action.triggered.connect(self.open_dicom_folder)
         data_menu = self.menuBar().addMenu('Data')
