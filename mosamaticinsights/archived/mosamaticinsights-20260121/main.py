@@ -1,6 +1,6 @@
 import sys
 from PySide6 import QtWidgets
-from mosamaticinsights.ui.mainwindow import MainWindow
+from mosamaticinsights.mainwindow import MainWindow
 
 
 def main():
