@@ -59,4 +59,4 @@ class Page(QWidget):
     # EVENT HANDLERS
 
     def handle_open_file_button(self):
-        
+        pass
