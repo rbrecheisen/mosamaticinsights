@@ -14,10 +14,9 @@ from PySide6.QtGui import (
     QIcon,
 )
 from mosamaticinsights.ui.settings import Settings
-from mosamaticinsights.ui.widgets.matplotlibsegmentationviewer import MuscleFatSegmentationViewer
+from mosamaticinsights.ui.widgets.musclefatsegmentationviewer import MuscleFatSegmentationViewer
 from mosamaticinsights.core.data.dicomfile import DicomFile
 from mosamaticinsights.core.data.numpyarrayfile import NumpyArrayFile
-from mosamaticinsights.core.data.niftifile import NiftiFile
 
 
 class MainWindow(QMainWindow):
