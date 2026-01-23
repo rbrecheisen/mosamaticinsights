@@ -1,10 +1,10 @@
 import time
-from mosamaticinsights.ui.backgroundprocess import BackgroundProcess
+from mosamaticinsights.ui.processes.backgroundprocess import BackgroundProcess
 
 
-class DicomAnalyzerProcess(BackgroundProcess):
+class DummyProcess(BackgroundProcess):
     def __init__(self):
-        super(DicomAnalyzerProcess, self).__init__()
+        super(DummyProcess, self).__init__()
         self._n = 10
 
     def execute(self):

@@ -13,47 +13,40 @@ from PySide6.QtGui import (
     QIcon,
 )
 from mosamaticinsights.ui.settings import Settings
-from mosamaticinsights.ui.centraldockwidget import CentralDockWidget
-from mosamaticinsights.ui.logdockwidget import LogDockWidget
-from mosamaticinsights.ui.pages.page import Page
+from mosamaticinsights.ui.widgets.matplotlibcanvas import MatplotlibCanvas
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self._settings = None
-        self._central_dockwidget = None
-        self._log_dockwidget = None
+        self._canvas = None
+        self._canvas_toolbar = None
         self.init()
 
     def init(self):
-        self.setWindowTitle('Mosamatic Insights 1.0')
-        self.setWindowIcon(QIcon(self.settings().get('mainwindow/icon_path')))
         self.load_geometry_and_state()
-        self.addDockWidget(
-            Qt.DockWidgetArea.TopDockWidgetArea, self.central_dockwidget())
-        self.addDockWidget(
-            Qt.DockWidgetArea.BottomDockWidgetArea, self.log_dockwidget())
         self.init_menus()
-        self.init_pages_and_menus()
+        self.init_window()
         
     def init_menus(self):
         self.init_app_menu()
-
-    def init_pages_and_menus(self):
-        page = Page(name='My Page', menu_path='Pages/My Page')
-        page_manager = self.central_dockwidget().page_manager()
-        page_manager.add_page(page)
-        page_manager.switch_to(page.name())
-        page_menu_action = QAction(page.menu_path().split('/')[1], self)
-        page_menu = self.menuBar().addMenu(page.menu_path().split('/')[0])
-        page_menu.addAction(page_menu_action)
 
     def init_app_menu(self):
         exit_action = QAction('Exit', self)
         exit_action.triggered.connect(self.close)
         app_menu = self.menuBar().addMenu('Application')
         app_menu.addAction(exit_action)
+
+    def init_window(self):
+        layout = QVBoxLayout()
+        layout.addWidget(self.canvas_toolbar())
+        layout.addWidget(self.canvas())
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
+        self.setWindowTitle('Mosamatic Insights 1.0')
+        self.setWindowIcon(QIcon(self.settings().get('mainwindow/icon_path')))
 
     # GETTERS
 
@@ -63,15 +56,15 @@ class MainWindow(QMainWindow):
             self._settings.set('mainwindow/icon_path', ':/icons/mosamaticinsights')
         return self._settings
     
-    def central_dockwidget(self):
-        if not self._central_dockwidget:
-            self._central_dockwidget = CentralDockWidget(self)
-        return self._central_dockwidget
+    def canvas(self):
+        if not self._canvas:
+            self._canvas = MatplotlibCanvas(self)
+        return self._canvas
     
-    def log_dockwidget(self):
-        if not self._log_dockwidget:
-            self._log_dockwidget = LogDockWidget(self)
-        return self._log_dockwidget
+    def canvas_toolbar(self):
+        if not self._canvas_toolbar:
+            self._canvas_toolbar = self.canvas().navtoolbar()
+        return self._canvas_toolbar
     
     # EVENT HANDLERS
 
