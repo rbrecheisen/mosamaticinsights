@@ -15,8 +15,9 @@ from PySide6.QtGui import (
 )
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.musclefatsegmentationviewer import MuscleFatSegmentationViewer
+from mosamaticinsights.ui.widgets.interactionwidgetdialog import InteractionWidgetDialog
 from mosamaticinsights.core.data.dicomfile import DicomFile
-from mosamaticinsights.core.data.numpyarrayfile import NumpyArrayFile
+from mosamaticinsights.core.data.numpyfile import NumpyFile
 
 
 class MainWindow(QMainWindow):
@@ -34,6 +35,7 @@ class MainWindow(QMainWindow):
     def init_menus(self):
         self.init_app_menu()
         self.init_data_menu()
+        self.init_controls_menu()
 
     def init_app_menu(self):
         exit_action = QAction('Exit', self)
@@ -49,6 +51,12 @@ class MainWindow(QMainWindow):
         data_menu = self.menuBar().addMenu('Data')
         data_menu.addAction(load_dicom_image_action)
         data_menu.addAction(load_segmentation_mask_action)
+
+    def init_controls_menu(self):
+        show_interactive_widgets_action = QAction('Interactive widgets...', self)
+        show_interactive_widgets_action.triggered.connect(self.handle_show_interactive_widgets_action)
+        controls_menu = self.menuBar().addMenu('Controls')
+        controls_menu.addAction(show_interactive_widgets_action)
 
     def init_main_window(self):
         layout = QVBoxLayout()
@@ -92,13 +100,16 @@ class MainWindow(QMainWindow):
         file_path, _ = QFileDialog.getOpenFileName(dir=last_directory, filter='NumPy arrays (*.npy)')
         if file_path:
             if file_path.endswith('.npy'): 
-                file = NumpyArrayFile(file_path)
+                file = NumpyFile(file_path)
                 if file.load():
                     self.viewer().set_segmentation(file.object())
             else:
                 print(f'Error loading segmentation {file_path} (unknown format)')
             self.settings().set('last_directory', os.path.split(file_path)[0])
 
+    def handle_show_interactive_widgets_action(self):
+        dialog = InteractionWidgetDialog(self)
+        dialog.show()
     
     # HELPERS
 

@@ -23,8 +23,8 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self.draw_idle()
 
     def set_segmentation(self, segmentation):
-        self._segmentation = segmentation
-        self._segmentation_display = self._segmentation
+        self._segmentation = segmentation.astype(np.uint8)
+        self._segmentation_display = self.apply_label_colors(self._segmentation)
         self.axes().imshow(self._segmentation_display)
         self.draw_idle()
 
@@ -35,5 +35,9 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         image = (image - lo) / (hi - lo)
         return (image * 255.0 + 0.5)
 
-    def apply_label_colors(self, segmentation):
-        
+    def apply_label_colors(self, segmentation, alpha=0.6):
+        out = np.zeros((*segmentation.shape, 4), dtype=np.float32)
+        for label, (r, g, b) in self._label_colors.items():
+            mask = (segmentation == label)
+            out[mask] = (r, g, b, alpha)
+        return out
