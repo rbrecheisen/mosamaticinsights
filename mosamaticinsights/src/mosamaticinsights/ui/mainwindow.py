@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self._settings = None
         self._viewer = None
+        self._widget_dialog = None
         self.init()
 
     def init(self):
@@ -81,6 +82,12 @@ class MainWindow(QMainWindow):
             self._viewer = MuscleFatSegmentationViewer(self)
         return self._viewer
     
+    def widget_dialog(self):
+        if not self._widget_dialog:
+            self._widget_dialog = InteractionWidgetDialog(self)
+            self._widget_dialog.hu_threshold_changed.connect(self.handle_hu_threshold_changed)
+        return self._widget_dialog
+    
     # EVENT HANDLERS
 
     def closeEvent(self, event):
@@ -108,8 +115,10 @@ class MainWindow(QMainWindow):
             self.settings().set('last_directory', os.path.split(file_path)[0])
 
     def handle_show_interactive_widgets_action(self):
-        dialog = InteractionWidgetDialog(self)
-        dialog.show()
+        self.widget_dialog().show()
+
+    def handle_hu_threshold_changed(self, value):
+        print(value)
     
     # HELPERS
 
