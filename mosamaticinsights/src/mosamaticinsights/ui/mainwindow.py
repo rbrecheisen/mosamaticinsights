@@ -14,6 +14,7 @@ from PySide6.QtGui import (
 )
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.matplotlibcanvas import MatplotlibCanvas
+from mosamaticinsights.core.data.dicomfile import DicomFile
 
 
 class MainWindow(QMainWindow):
@@ -27,7 +28,7 @@ class MainWindow(QMainWindow):
     def init(self):
         self.load_geometry_and_state()
         self.init_menus()
-        self.init_window()
+        self.init_main_window()
         
     def init_menus(self):
         self.init_app_menu()
@@ -38,7 +39,13 @@ class MainWindow(QMainWindow):
         app_menu = self.menuBar().addMenu('Application')
         app_menu.addAction(exit_action)
 
-    def init_window(self):
+    def init_data_menu(self):
+        load_dicom_image_action = QAction('Load DICOM image...', self)
+        load_dicom_image_action.triggered.connect(self.handle_load_dicom_image_action)
+        data_menu = self.menuBar().addMenu('Data')
+        data_menu.addAction(load_dicom_image_action)
+
+    def init_main_window(self):
         layout = QVBoxLayout()
         layout.addWidget(self.canvas_toolbar())
         layout.addWidget(self.canvas())
@@ -70,6 +77,15 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         self.save_geometry_and_state()
+
+    def handle_load_dicom_image_action(self):
+        last_directory = self.settings().get('last_directory')
+        file_path, _ = QFileDialog.getOpenFilename(dir=last_directory)
+        if file_path:
+            file = DicomFile(file_path)
+            if file.load():
+                pass
+            self.settings().set('last_directory')
     
     # HELPERS
 
