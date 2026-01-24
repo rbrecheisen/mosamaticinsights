@@ -34,9 +34,6 @@ class InteractionWidgetDialog(QDialog):
         layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow) # Especially needed on macOS
         layout.addRow('Opacity', slider_layout)
 
-    def default_opacity(self):
-        return self._opacity
-
     def handle_slider_value_changed(self, value):
         self._opacity = float(value) / 100.0
         self._slider_label.setText(str(self._opacity))
