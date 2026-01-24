@@ -18,7 +18,7 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self._segmentation = None
         self._segmentation_display = None
         self._segmentation_artist = None
-        self._opacity = 1.0
+        self._opacity = 0.5
 
     def set_image(self, image):
         self._image = image

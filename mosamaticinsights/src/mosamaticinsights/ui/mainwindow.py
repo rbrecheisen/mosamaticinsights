@@ -83,7 +83,8 @@ class MainWindow(QMainWindow):
     
     def widget_dialog(self):
         if not self._widget_dialog:
-            self._widget_dialog = InteractionWidgetDialog(self)
+            self._widget_dialog = InteractionWidgetDialog(
+                self, default_opacity=self.settings().get_float('interactionwidgetdialog/default_opacity', 1.0))
             self._widget_dialog.opacity_changed.connect(self.handle_opacity_changed)
         return self._widget_dialog
     
@@ -135,6 +136,7 @@ class MainWindow(QMainWindow):
     def save_geometry_and_state(self):
         self.settings().set('mainwindow/geometry', self.saveGeometry())
         self.settings().set('mainwindow/state', self.saveState())
+        self.settings().set('interactionwidgetdialog/default_opacity', self.widget_dialog().default_opacity())
 
     def center_window(self):
         screen = QGuiApplication.primaryScreen().geometry()
