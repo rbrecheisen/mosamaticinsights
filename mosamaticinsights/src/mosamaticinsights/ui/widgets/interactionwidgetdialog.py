@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QFormLayout,
 )
+from mosamaticinsights.ui.widgets.colorpicker import ColorPicker
 
 MASK_LABELS = {
     'All': -1,
@@ -34,6 +35,8 @@ class InteractionWidgetDialog(QDialog):
         self._mask_label_combobox.currentTextChanged.connect(self.handle_mask_label_combobox)
         self._opacity_slider_label = QLabel(str(self._opacity))
         self._hu_slider_label = QLabel(str(self._hu))
+        self._lo_hu_colorpicker = ColorPicker()
+        self._hi_hu_colorpicker = ColorPicker()
         self.init()
 
     def init(self):
