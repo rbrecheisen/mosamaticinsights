@@ -28,6 +28,10 @@ class ColorPicker(QWidget):
 
     def color(self):
         return self._color
+    
+    def set_color(self, color):
+        self._color = color
+        self.update_swatch()
 
     def handle_button(self):
         color = QColorDialog.getColor(self._color, self, 'Pick color', QColorDialog.ShowAlphaChannel)

@@ -11,6 +11,7 @@ from PySide6.QtGui import (
     QGuiApplication,
     QAction,
     QIcon,
+    QColor,
 )
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.musclefatsegmentationviewer import MuscleFatSegmentationViewer
@@ -80,16 +81,28 @@ class MainWindow(QMainWindow):
         if not self._viewer:
             self._viewer = MuscleFatSegmentationViewer(
                 self, opacity=self.settings().get_float('musclefatsegmentationviewer/opacity', 1.0))
+            self._viewer.set_hu(self.settings().get_int('musclefatsegmentationviewer/hu', 30))
+            self._viewer.set_hi_hu_color(self.settings().get('musclefatsegmentationviewer/hi_hu_color', QColor('red')))
+            self._viewer.set_lo_hu_color(self.settings().get('musclefatsegmentationviewer/lo_hu_color', QColor('yellow')))
+            self._viewer.set_window(self.settings().get_int('musclefatsegmentationviewer/window', 400))
+            self._viewer.set_level(self.settings().get_int('musclefatsegmentationviewer/level', 50))
         return self._viewer
     
     def widget_dialog(self):
         if not self._widget_dialog:
             self._widget_dialog = InteractionWidgetDialog(self, opacity=self.viewer().opacity())
+            self._widget_dialog.set_hu(self.viewer().hu())
+            self._widget_dialog.set_level(self.viewer().level())
+            self._widget_dialog.set_window(self.viewer().windowx())
+            self._widget_dialog.set_lo_hu_color(self.viewer().lo_hu_color())
+            self._widget_dialog.set_hi_hu_color(self.viewer().hi_hu_color())
             self._widget_dialog.opacity_changed.connect(self.handle_opacity_changed)
             self._widget_dialog.mask_label_selection_changed.connect(self.handle_mask_label_selection_changed)
             self._widget_dialog.hu_changed.connect(self.handle_hu_changed)
             self._widget_dialog.lo_hu_color_changed.connect(self.handle_lo_hu_color_changed)
             self._widget_dialog.hi_hu_color_changed.connect(self.handle_hi_hu_color_changed)
+            self._widget_dialog.window_changed.connect(self.handle_window_changed)
+            self._widget_dialog.level_changed.connect(self.handle_level_changed)
         return self._widget_dialog
     
     # EVENT HANDLERS
@@ -145,6 +158,12 @@ class MainWindow(QMainWindow):
 
     def handle_mask_label_selection_changed(self, mask_label):
         self.viewer().set_selected_mask_label(mask_label)
+
+    def handle_window_changed(self, value):
+        self.viewer().set_window(value)
+
+    def handle_level_changed(self, value):
+        self.viewer().set_level(value)
     
     # HELPERS
 
@@ -163,6 +182,11 @@ class MainWindow(QMainWindow):
         self.settings().set('mainwindow/geometry', self.saveGeometry())
         self.settings().set('mainwindow/state', self.saveState())
         self.settings().set('musclefatsegmentationviewer/opacity', self.viewer().opacity())
+        self.settings().set('musclefatsegmentationviewer/hu', self.viewer().hu())
+        self.settings().set('musclefatsegmentationviewer/hi_hu_color', self.viewer().hi_hu_color())
+        self.settings().set('musclefatsegmentationviewer/lo_hu_color', self.viewer().lo_hu_color())
+        self.settings().set('musclefatsegmentationviewer/window', self.viewer().windowx())
+        self.settings().set('musclefatsegmentationviewer/level', self.viewer().level())
 
     def center_window(self):
         screen = QGuiApplication.primaryScreen().geometry()

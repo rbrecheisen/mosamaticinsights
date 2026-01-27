@@ -16,6 +16,7 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         }
         self._image = None
         self._image_display = None
+        self._image_artist = None
         self._segmentation = None
         self._segmentation_display = None
         self._segmentation_artist = None
@@ -24,20 +25,30 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self._lo_hu_color = QColor('yellow')
         self._hi_hu_color = QColor('red')
         self._selected_mask_label = -1
+        self._window = 400
+        self._level = 50
 
     def set_image(self, image):
         self._image = image
-        self._image_display = self.apply_window_and_level(self._image)
-        self.axes().clear()
-        self.axes().imshow(self._image_display, cmap='gray')
+        self.update_image()
+
+    def update_image(self):
+        if self._image is None:
+            return
+        self._image_display = self.apply_window_and_level(self._image, self._window, self._level)
+        if self._image_artist is None:
+            self._image_artist = self.axes().imshow(self._image_display, cmap='gray')
+        else:
+            self._image_artist.set_data(self._image_display)
         self.draw_idle()
 
     def set_segmentation(self, segmentation):
         self._segmentation = segmentation.astype(np.uint8)       
-        print(f'Unique segmentation labels: {np.unique(self._segmentation)}') 
         self.update_segmentation()
 
     def update_segmentation(self):
+        if self._segmentation is None:
+            return
         if self._selected_mask_label > -1:
             mask = (self._segmentation == self._selected_mask_label)
             self._segmentation_display = self.apply_label_colors_thresholded(self._image, mask, self._opacity, self._hu, self._lo_hu_color, self._hi_hu_color)
@@ -49,7 +60,7 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
             self._segmentation_artist.set_data(self._segmentation_display)
         self.draw_idle()
 
-    def apply_window_and_level(self, image, window=400, level=50):
+    def apply_window_and_level(self, image, window, level):
         lo = level - window / 2.0
         hi = level + window / 2.0
         image = np.clip(image, lo, hi)
@@ -85,9 +96,15 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self._hu = hu
         self.update_segmentation()
 
+    def lo_hu_color(self):
+        return self._lo_hu_color
+
     def set_lo_hu_color(self, color):
         self._lo_hu_color = color
         self.update_segmentation()
+
+    def hi_hu_color(self):
+        return self._hi_hu_color
 
     def set_hi_hu_color(self, color):
         self._hi_hu_color = color
@@ -99,3 +116,17 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
     def set_selected_mask_label(self, mask_label):
         self._selected_mask_label = mask_label
         self.update_segmentation()
+
+    def windowx(self):
+        return self._window
+
+    def set_window(self, window):
+        self._window = window
+        self.update_image()
+
+    def level(self):
+        return self._level
+
+    def set_level(self, level):
+        self._level = level
+        self.update_image()
