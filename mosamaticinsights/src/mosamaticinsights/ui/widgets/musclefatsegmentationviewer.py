@@ -1,3 +1,4 @@
+from PySide6.QtGui import QColor
 import numpy as np
 from mosamaticinsights.ui.widgets.matplotlibcanvas import MatplotlibCanvas
 
@@ -20,6 +21,8 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self._segmentation_artist = None
         self._opacity = opacity
         self._hu = 30
+        self._lo_hu_color = QColor('yellow')
+        self._hi_hu_color = QColor('red')
         self._selected_mask_label = -1
 
     def set_image(self, image):
@@ -30,13 +33,16 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
         self.draw_idle()
 
     def set_segmentation(self, segmentation):
-        self._segmentation = segmentation.astype(np.uint8)        
+        self._segmentation = segmentation.astype(np.uint8)       
+        print(f'Unique segmentation labels: {np.unique(self._segmentation)}') 
         self.update_segmentation()
 
     def update_segmentation(self):
         if self._selected_mask_label > -1:
-            self._segmentation = (self._segmentation == self._selected_mask_label)
-        self._segmentation_display = self.apply_label_colors(self._segmentation, opacity=self._opacity)
+            mask = (self._segmentation == self._selected_mask_label)
+            self._segmentation_display = self.apply_label_colors_thresholded(self._image, mask, self._opacity, self._hu, self._lo_hu_color, self._hi_hu_color)
+        else:
+            self._segmentation_display = self.apply_label_colors(self._segmentation, opacity=self._opacity)
         if self._segmentation_artist is None:
             self._segmentation_artist = self.axes().imshow(self._segmentation_display)
         else:
@@ -57,6 +63,14 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
             out[mask] = (r, g, b, opacity)
         return out
     
+    def apply_label_colors_thresholded(self, image, segmentation, opacity, hu, lo_hu_color, hi_hu_color):
+        hi = segmentation & (image >= hu)
+        lo = segmentation & (image < hu)
+        overlay = np.zeros((*image.shape, 4), dtype=np.float32)
+        overlay[hi] = (hi_hu_color.redF(), hi_hu_color.greenF(), hi_hu_color.blueF(), opacity)
+        overlay[lo] = (lo_hu_color.redF(), lo_hu_color.greenF(), lo_hu_color.blueF(), opacity)
+        return overlay
+    
     def opacity(self):
         return self._opacity
     
@@ -69,6 +83,14 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
 
     def set_hu(self, hu):
         self._hu = hu
+        self.update_segmentation()
+
+    def set_lo_hu_color(self, color):
+        self._lo_hu_color = color
+        self.update_segmentation()
+
+    def set_hi_hu_color(self, color):
+        self._hi_hu_color = color
         self.update_segmentation()
 
     def selected_mask_label(self):

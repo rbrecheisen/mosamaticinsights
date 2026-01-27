@@ -87,6 +87,9 @@ class MainWindow(QMainWindow):
             self._widget_dialog = InteractionWidgetDialog(self, opacity=self.viewer().opacity())
             self._widget_dialog.opacity_changed.connect(self.handle_opacity_changed)
             self._widget_dialog.mask_label_selection_changed.connect(self.handle_mask_label_selection_changed)
+            self._widget_dialog.hu_changed.connect(self.handle_hu_changed)
+            self._widget_dialog.lo_hu_color_changed.connect(self.handle_lo_hu_color_changed)
+            self._widget_dialog.hi_hu_color_changed.connect(self.handle_hi_hu_color_changed)
         return self._widget_dialog
     
     # EVENT HANDLERS
@@ -132,9 +135,13 @@ class MainWindow(QMainWindow):
         self.viewer().set_opacity(opacity)
 
     def handle_hu_changed(self, hu):
-        lo_hu_color = self.widget_dialog().lo_hu_color()
-        hi_hu_color = self.widget_dialog().hi_hu_color()
-        self.viewer().set_hu(hu, lo_hu_color, hi_hu_color)
+        self.viewer().set_hu(hu)
+
+    def handle_lo_hu_color_changed(self, color):
+        self.viewer().set_lo_hu_color(color)
+
+    def handle_hi_hu_color_changed(self, color):
+        self.viewer().set_hi_hu_color(color)
 
     def handle_mask_label_selection_changed(self, mask_label):
         self.viewer().set_selected_mask_label(mask_label)
