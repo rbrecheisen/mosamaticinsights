@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QHBoxLayout,
     QFormLayout,
+    QPushButton,
 )
 from PySide6.QtGui import QColor
 from mosamaticinsights.ui.widgets.colorpicker import ColorPicker
@@ -27,6 +28,7 @@ class InteractionWidgetDialog(QDialog):
     mask_label_selection_changed = Signal(int)
     window_changed = Signal(int)
     level_changed = Signal(int)
+    reset = Signal()
 
     def __init__(self, parent, opacity=1.0):
         super(InteractionWidgetDialog, self).__init__(parent)

@@ -79,13 +79,12 @@ class MainWindow(QMainWindow):
     
     def viewer(self):
         if not self._viewer:
-            self._viewer = MuscleFatSegmentationViewer(
-                self, opacity=self.settings().get_float('musclefatsegmentationviewer/opacity', 1.0))
-            self._viewer.set_hu(self.settings().get_int('musclefatsegmentationviewer/hu', 30))
-            self._viewer.set_hi_hu_color(self.settings().get('musclefatsegmentationviewer/hi_hu_color', QColor('red')))
-            self._viewer.set_lo_hu_color(self.settings().get('musclefatsegmentationviewer/lo_hu_color', QColor('yellow')))
-            self._viewer.set_window(self.settings().get_int('musclefatsegmentationviewer/window', 400))
-            self._viewer.set_level(self.settings().get_int('musclefatsegmentationviewer/level', 50))
+            self._viewer = MuscleFatSegmentationViewer(self, opacity=1.0)
+            # self._viewer.set_hu(self.settings().get_int('musclefatsegmentationviewer/hu', 30))
+            # self._viewer.set_hi_hu_color(self.settings().get('musclefatsegmentationviewer/hi_hu_color', QColor('red')))
+            # self._viewer.set_lo_hu_color(self.settings().get('musclefatsegmentationviewer/lo_hu_color', QColor('yellow')))
+            # self._viewer.set_window(self.settings().get_int('musclefatsegmentationviewer/window', 400))
+            # self._viewer.set_level(self.settings().get_int('musclefatsegmentationviewer/level', 50))
         return self._viewer
     
     def widget_dialog(self):
@@ -103,6 +102,7 @@ class MainWindow(QMainWindow):
             self._widget_dialog.hi_hu_color_changed.connect(self.handle_hi_hu_color_changed)
             self._widget_dialog.window_changed.connect(self.handle_window_changed)
             self._widget_dialog.level_changed.connect(self.handle_level_changed)
+            self._widget_dialog.reset.connect(self.handle_reset)
         return self._widget_dialog
     
     # EVENT HANDLERS
@@ -164,6 +164,9 @@ class MainWindow(QMainWindow):
 
     def handle_level_changed(self, value):
         self.viewer().set_level(value)
+
+    def handle_reset(self):
+        self.viewer().reset()
     
     # HELPERS
 
@@ -181,12 +184,12 @@ class MainWindow(QMainWindow):
     def save_geometry_and_state(self):
         self.settings().set('mainwindow/geometry', self.saveGeometry())
         self.settings().set('mainwindow/state', self.saveState())
-        self.settings().set('musclefatsegmentationviewer/opacity', self.viewer().opacity())
-        self.settings().set('musclefatsegmentationviewer/hu', self.viewer().hu())
-        self.settings().set('musclefatsegmentationviewer/hi_hu_color', self.viewer().hi_hu_color())
-        self.settings().set('musclefatsegmentationviewer/lo_hu_color', self.viewer().lo_hu_color())
-        self.settings().set('musclefatsegmentationviewer/window', self.viewer().windowx())
-        self.settings().set('musclefatsegmentationviewer/level', self.viewer().level())
+        # self.settings().set('musclefatsegmentationviewer/opacity', self.viewer().opacity())
+        # self.settings().set('musclefatsegmentationviewer/hu', self.viewer().hu())
+        # self.settings().set('musclefatsegmentationviewer/hi_hu_color', self.viewer().hi_hu_color())
+        # self.settings().set('musclefatsegmentationviewer/lo_hu_color', self.viewer().lo_hu_color())
+        # self.settings().set('musclefatsegmentationviewer/window', self.viewer().windowx())
+        # self.settings().set('musclefatsegmentationviewer/level', self.viewer().level())
 
     def center_window(self):
         screen = QGuiApplication.primaryScreen().geometry()

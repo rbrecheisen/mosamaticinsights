@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import (
-    QApplication,
     QFrame, 
     QWidget,
     QColorDialog, 
@@ -13,7 +12,7 @@ from PySide6.QtGui import QColor
 class ColorPicker(QWidget):
     color_changed = Signal(QColor)
 
-    def __init__(self, title, color=QColor('#ff0000')):
+    def __init__(self, title, color=QColor('white')):
         super(ColorPicker, self).__init__()
         self._color = color
         self._button = QPushButton(title)
