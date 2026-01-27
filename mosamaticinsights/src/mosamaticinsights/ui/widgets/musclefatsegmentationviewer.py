@@ -60,18 +60,6 @@ class MuscleFatSegmentationViewer(MatplotlibCanvas):
             self._segmentation_artist.set_data(self._segmentation_display)
         self.draw_idle()
 
-    def reset(self):
-        print('resetting viewer...')
-        self._opacity = 1.0
-        self._hu = 30
-        self._lo_hu_color = QColor('yellow')
-        self._hi_hu_color = QColor('red')
-        self._selected_mask_label = -1
-        self._window = 400
-        self._level = 50
-        self.update_image()
-        self.update_segmentation()
-
     def apply_window_and_level(self, image, window, level):
         lo = level - window / 2.0
         hi = level + window / 2.0
