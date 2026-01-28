@@ -4,6 +4,8 @@ from mosamaticinsights.ui.widgets.matplotlibcanvas import MatplotlibCanvas
 
 # Info on how to visualize probabilities
 # https://chatgpt.com/c/6978badd-2a14-832b-ad4f-552bb5f50a75
+#
+# certainty = p_muscle - second_best_probability
 
 
 class MuscleFatSegmentationUncertaintyViewer(MatplotlibCanvas):
