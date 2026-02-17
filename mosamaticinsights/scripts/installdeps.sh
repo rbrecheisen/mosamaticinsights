@@ -6,7 +6,6 @@ mamba install -c conda-forge \
     pandas \
     pydicom \
     pillow \
-    opencv \
     poetry \
     matplotlib \
-    SimpleITK
+    simpleitk

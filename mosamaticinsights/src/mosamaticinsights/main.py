@@ -1,12 +1,14 @@
 import sys
-from PySide6 import QtWidgets
+from PySide6.QtWidgets import QApplication, QStyle
 from mosamaticinsights.ui.mainwindow import MainWindow
 
 
 def main():
-    QtWidgets.QApplication.setApplicationName('mosamaticinsights')
-    app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
+    QApplication.setApplicationName('mosamaticinsights')
+    app = QApplication(sys.argv)
+    window = MainWindow(
+        app.style().standardIcon(QStyle.StandardPixmap.SP_ArrowForward)
+    )
     window.show()
     sys.exit(app.exec())
 
