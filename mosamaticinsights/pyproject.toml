@@ -35,6 +35,7 @@ packages = [
 
 [tool.poetry.scripts]
 mosamaticinsights = "mosamaticinsights.main:main"
+mosamaticinsights-cli = "mosamaticinsights.main:cli"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
