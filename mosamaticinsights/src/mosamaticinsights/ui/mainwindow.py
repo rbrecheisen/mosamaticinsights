@@ -1,12 +1,10 @@
-from PySide6.QtCore import Qt, QByteArray, Signal
-from PySide6.QtWidgets import QMainWindow, QStyle, QFileDialog
+from PySide6.QtCore import Qt, QByteArray
+from PySide6.QtWidgets import QMainWindow, QStyle
 from PySide6.QtGui import QGuiApplication, QAction
 from mosamaticinsights.core.utilities.logmanager import LogManager
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.centraldockwidget import CentralDockWidget
 from mosamaticinsights.ui.widgets.logdockwidget import LogDockWidget
-from mosamaticinsights.ui.process.dummyprocess import DummyProcess
-from mosamaticinsights.ui.process.processrunner import ProcessRunner
 
 LOG = LogManager()
 
@@ -18,7 +16,6 @@ class MainWindow(QMainWindow):
         self._app_icon = app_icon
         self._central_dockwidget = None
         self._log_dockwidget = None
-        self._process_runner = None
         self.init()
 
     # INITIALIZATION
@@ -45,14 +42,6 @@ class MainWindow(QMainWindow):
         view_log_action = self.log_dockwidget().toggleViewAction()
         view_log_action.setText('Log')
         view_menu.addAction(view_log_action)
-        # Process
-        process_menu = self.menuBar().addMenu('Process')
-        start_dummy_process_action = QAction('Start dummy process...', self)
-        start_dummy_process_action.triggered.connect(self.handle_start_dummy_process_action)
-        process_menu.addAction(start_dummy_process_action)
-        cancel_process_action = QAction('Cancel process', self)
-        cancel_process_action.triggered.connect(self.handle_cancel_process_action)
-        process_menu.addAction(cancel_process_action)
     
     # GETTERS
 
@@ -70,11 +59,6 @@ class MainWindow(QMainWindow):
             LOG.add_listener(self._log_dockwidget)
         return self._log_dockwidget
     
-    def process_runner(self):
-        if not self._process_runner:
-            self._process_runner = ProcessRunner()
-        return self._process_runner
-    
     def app_icon(self):
         return self._app_icon
 
@@ -83,12 +67,6 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.save_geometry_and_state()
         return super().closeEvent(event)
-    
-    def handle_start_dummy_process_action(self):
-        self.process_runner().start(DummyProcess())
-
-    def handle_cancel_process_action(self):
-        self.process_runner().cancel()
 
     # PRIVATE HELPERS
         

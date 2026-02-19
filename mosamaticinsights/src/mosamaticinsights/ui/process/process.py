@@ -14,14 +14,25 @@ class Process(QObject):
     started = Signal()
     canceled = Signal()
 
-    def __init__(self, parent=None):
+    def __init__(self, inputs, output, params=None, parent=None):
         super(Process, self).__init__(parent)
+        self._inputs = inputs
+        self._output = output
+        self._params = params
         self._cancel = False
         self._thread = None
         self._main_thread = None
 
-    def name(self):
-        return self._name
+    # GETTERS
+
+    def input(self, name):
+        return self._inputs[name]
+    
+    def output(self):
+        return self._output
+    
+    def param(self, name):
+        return self._params[name]
 
     def cancel(self):
         self._cancel = True
