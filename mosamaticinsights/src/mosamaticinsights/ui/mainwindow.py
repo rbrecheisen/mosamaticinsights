@@ -38,6 +38,10 @@ class MainWindow(QMainWindow):
         exit_action = QAction(icon, 'E&xit', self)
         exit_action.triggered.connect(self.close)
         application_menu.addAction(exit_action)
+        view_menu = self.menuBar().addMenu('View')
+        view_log_action = self.log_dockwidget().toggleViewAction()
+        view_log_action.setText('Log')
+        view_menu.addAction(view_log_action)
     
     # ------------------------------------------------------------------------------------
     def settings(self):
