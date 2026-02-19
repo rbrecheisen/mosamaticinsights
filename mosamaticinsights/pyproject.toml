@@ -8,7 +8,6 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
 dependencies = [
-    "rbeesoft>=2.0.0",
     "torch==2.5.1",
     "torchvision>=0.20.1",
     "torchsummary",
@@ -28,14 +27,8 @@ packages = [
     {include = "models.py", from = "src" },
 ]
 
-#[[tool.poetry.source]]
-#name = "pytorch-cu121"
-#url = "https://download.pytorch.org/whl/cu121"
-#priority = "supplemental"
-
 [tool.poetry.scripts]
 mosamaticinsights = "mosamaticinsights.main:main"
-mosamaticinsights-cli = "mosamaticinsights.main:cli"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"

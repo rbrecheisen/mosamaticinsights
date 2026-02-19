@@ -3090,18 +3090,6 @@ files = [
 ]
 
 [[package]]
-name = "rbeesoft"
-version = "2.0.0"
-description = ""
-optional = false
-python-versions = "<3.12,>=3.11"
-groups = ["main"]
-files = [
-    {file = "rbeesoft-2.0.0-py3-none-any.whl", hash = "sha256:4bc1402e4f593ebc822a08839697472b2ca2cbf9283c2954e04f74b83679d153"},
-    {file = "rbeesoft-2.0.0.tar.gz", hash = "sha256:49fc6d7410c1d485c685de8ebf14e5304b9172b6e769c827257a10552f2c2615"},
-]
-
-[[package]]
 name = "requests"
 version = "2.32.5"
 description = "Python HTTP for Humans."
@@ -4266,4 +4254,4 @@ PyYAML = "*"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.12"
-content-hash = "6822553ea04cf7ae90b1ab2e29eabc1a88c0f63b4125f50ddde31a7073d435a4"
+content-hash = "6c87753b825992dcd6df5b9004a696e55dbef1a9c66aaa49c22b37429e40e294"
