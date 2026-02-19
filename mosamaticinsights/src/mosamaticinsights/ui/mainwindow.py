@@ -10,8 +10,6 @@ LOG = LogManager()
 
 
 class MainWindow(QMainWindow):
-
-    # ------------------------------------------------------------------------------------
     def __init__(self, bundle_identifier, app_name, app_icon):
         super(MainWindow, self).__init__()
         self._settings = Settings(bundle_identifier, app_name)
@@ -20,7 +18,8 @@ class MainWindow(QMainWindow):
         self._log_dockwidget = None
         self.init()
 
-    # ------------------------------------------------------------------------------------
+    # INITIALIZATION
+
     def init(self):
         self.setWindowTitle('Mosamatic Insights')
         self.addDockWidget(Qt.DockWidgetArea.TopDockWidgetArea, self.central_dockwidget())
@@ -31,7 +30,6 @@ class MainWindow(QMainWindow):
         self.init_default_menus()
         self.statusBar().showMessage('Ready')
 
-    # ------------------------------------------------------------------------------------
     def init_default_menus(self):
         application_menu = self.menuBar().addMenu('Application')
         icon = self.style().standardIcon(QStyle.StandardPixmap.SP_MessageBoxCritical)
@@ -43,33 +41,33 @@ class MainWindow(QMainWindow):
         view_log_action.setText('Log')
         view_menu.addAction(view_log_action)
     
-    # ------------------------------------------------------------------------------------
+    # GETTERS
+
     def settings(self):
         return self._settings
 
-    # ------------------------------------------------------------------------------------
     def central_dockwidget(self):
         if not self._central_dockwidget:
             self._central_dockwidget = CentralDockWidget(self, self.settings())
         return self._central_dockwidget
     
-    # ------------------------------------------------------------------------------------
     def log_dockwidget(self):
         if not self._log_dockwidget:
             self._log_dockwidget = LogDockWidget(self)
             LOG.add_listener(self._log_dockwidget)
         return self._log_dockwidget
     
-    # ------------------------------------------------------------------------------------
     def app_icon(self):
         return self._app_icon
 
-    # ------------------------------------------------------------------------------------
+    # EVENT HANDLERS
+
     def closeEvent(self, event):
         self.save_geometry_and_state()
         return super().closeEvent(event)
-    
-    # ------------------------------------------------------------------------------------
+
+    # PRIVATE HELPERS
+        
     def load_geometry_and_state(self):
         geometry = self.settings().get('mainwindow/geometry')
         state = self.settings().get('mainwindow/state')
@@ -80,12 +78,10 @@ class MainWindow(QMainWindow):
         self.resize(1024, 1024)
         self.center_window()        
 
-    # ------------------------------------------------------------------------------------
     def save_geometry_and_state(self):
         self.settings().set('mainwindow/geometry', self.saveGeometry())
         self.settings().set('mainwindow/state', self.saveState())
 
-    # ------------------------------------------------------------------------------------
     def center_window(self):
         screen = QGuiApplication.primaryScreen().geometry()
         x = (screen.width() - self.geometry().width()) / 2

@@ -1,2 +1,0 @@
-class TaskException(BaseException):
-    pass
