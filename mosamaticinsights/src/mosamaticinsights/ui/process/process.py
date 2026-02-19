@@ -25,11 +25,17 @@ class Process(QObject):
 
     # GETTERS
 
+    def inputs(self):
+        return self._inputs
+
     def input(self, name):
         return self._inputs[name]
     
     def output(self):
         return self._output
+    
+    def params(self):
+        return self._params
     
     def param(self, name):
         return self._params[name]
