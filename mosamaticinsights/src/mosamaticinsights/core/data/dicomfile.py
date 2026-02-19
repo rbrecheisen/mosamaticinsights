@@ -26,7 +26,7 @@ class DicomFile(File):
             if self.is_jpeg2000_compressed(p):
                 p.decompress()
             self.set_object(p)
-            return p
+            return True
         except pydicom.errors.InvalidDicomError:
             try:
                 p = pydicom.dcmread(self.path(), stop_before_pixels=stop_before_pixels, force=True)
@@ -37,7 +37,7 @@ class DicomFile(File):
                     if self.is_jpeg2000_compressed(p):
                         p.decompress()
                     self.set_object(p)
-                    return p
+                    return True
             except pydicom.errors.InvalidDicomError:
                 pass
-        return None
+        return False

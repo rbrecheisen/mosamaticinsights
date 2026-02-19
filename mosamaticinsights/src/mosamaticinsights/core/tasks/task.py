@@ -10,7 +10,7 @@ class Task:
     PARAMS = []
     OUTPUT = 'output'
 
-    def __init__(self, inputs, output, params=[], overwrite=True, create_task_subdir=True):
+    def __init__(self, inputs, output, params=None, overwrite=True, create_task_subdir=True):
         self._inputs = self._check_inputs(inputs)
         self._output = self._check_and_create_output(output, overwrite, create_task_subdir)
         self._params = self._check_params(params)
@@ -64,6 +64,8 @@ class Task:
         return output
 
     def _check_params(self, params):
+        if params is None:
+            return {}
         if not isinstance(params, dict):
             raise ValueError('Parameters must be a dictionary with name/value pairs')
         if len(params.keys()) != len(self.__class__.PARAMS):
