@@ -10,7 +10,7 @@ mamba create -n mosamaticinsights python=3.11 ^
     matplotlib ^
     simpleitk -c conda-forge
 
-mamba activate mosamaticinsights
-poetry config virtualenvs.create false --local
-poetry lock
-poetry install
+@REM mamba activate mosamaticinsights
+@REM poetry config virtualenvs.create false --local
+@REM poetry lock
+@REM poetry install
