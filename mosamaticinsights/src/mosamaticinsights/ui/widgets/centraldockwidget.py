@@ -3,7 +3,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QDockWidget,
 )
-from mosamaticinsights.core.common.logmanager import LogManager
+from mosamaticinsights.core.utilities.logmanager import LogManager
 from mosamaticinsights.ui.widgets.pages.pagerouter import PageRouter
 
 LOG = LogManager()

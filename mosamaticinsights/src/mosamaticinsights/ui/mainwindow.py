@@ -4,7 +4,7 @@ from PySide6.QtGui import QGuiApplication, QAction
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.centraldockwidget import CentralDockWidget
 from mosamaticinsights.ui.widgets.logdockwidget import LogDockWidget
-from mosamaticinsights.core.common.logmanager import LogManager
+from mosamaticinsights.core.utilities.logmanager import LogManager
 
 LOG = LogManager()
 

@@ -2,7 +2,7 @@ import os
 import atexit
 import datetime
 from pathlib import Path
-from mosamaticinsights.core.common.decorators import singleton
+from mosamaticinsights.core.utilities.decorators import singleton
 
 
 @singleton

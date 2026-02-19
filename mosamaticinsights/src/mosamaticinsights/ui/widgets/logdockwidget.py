@@ -7,7 +7,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QLabel,
 )
-from mosamaticinsights.core.common.logmanagerlistener import LogManagerListener
+from mosamaticinsights.core.utilities.logmanagerlistener import LogManagerListener
 
 
 class LogDockWidget(QDockWidget, LogManagerListener):

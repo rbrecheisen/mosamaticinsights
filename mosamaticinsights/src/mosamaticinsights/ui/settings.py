@@ -2,7 +2,7 @@ from PySide6.QtCore import QSettings
 
 
 class Settings(QSettings):
-    def __init__(self, bundle_identifier: str, app_name: str):
+    def __init__(self, bundle_identifier, app_name):
         super(Settings, self).__init__(
             QSettings.IniFormat, 
             QSettings.UserScope, 
