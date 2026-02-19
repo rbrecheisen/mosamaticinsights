@@ -3,7 +3,7 @@ import shutil
 import numpy as np
 from mosamaticinsights.core.tasks.task import Task
 from mosamaticinsights.core.utilities.logmanager import LogManager
-from mosamaticinsights.core.data.dicomfile import DicomFile
+from mosamaticinsights.core.data.multidicomfile import MultiDicomFile
 from scipy.ndimage import zoom
 
 LOG = LogManager()
@@ -17,13 +17,10 @@ class RescaleDicomImagesTask(Task):
         super(RescaleDicomImagesTask, self).__init__(inputs, output, params, overwrite, create_task_subdir)
 
     def load_images(self):
-        images = []
-        for f in os.listdir(self.input('images')):
-            f_path = os.path.join(self.input('images'), f)
-            dicom_file = DicomFile(f_path)
-            if dicom_file.load():
-                images.append(dicom_file)
-        return images
+        images = MultiDicomFile(self.input('images'))
+        if images.load():
+            return images.files()
+        return None
 
     def rescale_image(self, p, target_size):
         pixel_array = p.pixel_array
