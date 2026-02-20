@@ -7,10 +7,6 @@ def main():
     app_name = 'mosamaticinsights'
     QApplication.setApplicationName(app_name)
     app = QApplication(sys.argv)
-    # window = MainWindow(
-    #     'nr.rbeesoft',
-    #     'mosamaticinsights',
-    #     app.style().standardIcon(QStyle.StandardPixmap.SP_ArrowForward))
     window = MainWindow(
         app.style().standardIcon(QStyle.StandardPixmap.SP_ArrowForward))
     window.show()

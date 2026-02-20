@@ -1,4 +1,6 @@
 from rbeesoft.app.ui import RbeesoftMainWindow
+from mosamaticinsights.ui.widgets.pages.homepage.homepage import HomePage
+from mosamaticinsights.ui.widgets.pages.l3analysispage.l3analysispage import L3AnalysisPage
 
 MAJOR_VERSION = 1.0
 
@@ -15,3 +17,7 @@ class MainWindow(RbeesoftMainWindow):
             app_icon=app_icon,
             requires_license=False,
         )
+        self.add_page(
+            HomePage('home', 'Home', self.settings()), home_page=True)
+        self.add_page(
+            L3AnalysisPage('l3analysis', 'L3 analysis', self.settings()))
