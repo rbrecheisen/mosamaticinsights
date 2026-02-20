@@ -22,7 +22,9 @@ def rescaledicomimages(images, output, target_size, overwrite):
     task = RescaleDicomImagesTask(
         inputs={'images': images}, 
         params={'target_size': target_size}, 
+        progress_callback=None,
+        failed_callback=None,
         output=output, 
-        overwrite=overwrite
+        overwrite=overwrite,
     )
     task.run()

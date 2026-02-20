@@ -10,10 +10,21 @@ class Task:
     PARAMS = []
     OUTPUT = 'output'
 
-    def __init__(self, inputs, output, params=None, overwrite=True, create_task_subdir=True):
+    def __init__(
+        self, 
+        inputs, 
+        output, 
+        params, 
+        progress_callback,
+        failed_callback,
+        overwrite=True, 
+        create_task_subdir=True
+    ):
         self._inputs = self._check_inputs(inputs)
         self._output = self._check_and_create_output(output, overwrite, create_task_subdir)
         self._params = self._check_params(params)
+        self._progress_callback = progress_callback
+        self._failed_callback = failed_callback
         self._overwrite = overwrite
             
     # GETTERS
@@ -33,7 +44,12 @@ class Task:
     # PUBLIC METHODS
     
     def set_progress(self, step, nr_steps):
-        LOG.info(f'[{self.__class__.__name__}] step {step} from {nr_steps}')
+        if self._progress_callback:
+            self._progress_callback(step, nr_steps)
+
+    def set_failed(self, e):
+        if self._failed_callback:
+            self._failed_callback(e)
 
     def run(self):
         raise NotImplementedError()

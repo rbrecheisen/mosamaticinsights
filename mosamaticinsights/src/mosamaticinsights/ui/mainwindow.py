@@ -5,6 +5,8 @@ from mosamaticinsights.core.utilities.logmanager import LogManager
 from mosamaticinsights.ui.settings import Settings
 from mosamaticinsights.ui.widgets.centraldockwidget import CentralDockWidget
 from mosamaticinsights.ui.widgets.logdockwidget import LogDockWidget
+from mosamaticinsights.ui.process.processrunner import ProcessRunner
+from mosamaticinsights.ui.process.rescaledicomimagesprocess import RescaleDicomImagesProcess
 
 LOG = LogManager()
 
@@ -16,6 +18,7 @@ class MainWindow(QMainWindow):
         self._app_icon = app_icon
         self._central_dockwidget = None
         self._log_dockwidget = None
+        self._process_runner = ProcessRunner()
         self.init()
 
     # INITIALIZATION
@@ -42,6 +45,9 @@ class MainWindow(QMainWindow):
         view_log_action = self.log_dockwidget().toggleViewAction()
         view_log_action.setText('Log')
         view_menu.addAction(view_log_action)
+        run_process_action = QAction('Run process', self)
+        run_process_action.triggered.connect(self.handle_run_process_action)
+        view_menu.addAction(run_process_action)
     
     # GETTERS
 
@@ -67,6 +73,30 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.save_geometry_and_state()
         return super().closeEvent(event)
+    
+    def handle_run_process_action(self):
+        process = RescaleDicomImagesProcess(
+            inputs={'images': 'M:/data/mosamatic/test/L3'},
+            output='M:/data/mosamatic/test/output',
+            params={'target_size': 512},
+        )
+        process.progress.connect(self.handle_process_progress)
+        process.finished.connect(self.handle_process_finished)
+        process.canceled.connect(self.handle_process_canceled)
+        process.failed.connect(self.handle_process_failed)
+        self._process_runner.start(process)
+
+    def handle_process_progress(self, step, nr_steps):
+        LOG.info(f'Progress: {step} of {nr_steps}')
+
+    def handle_process_finished(self, result):
+        LOG.info(f'Finished: {result}')
+
+    def handle_process_canceled(self):
+        LOG.info('Canceled')
+
+    def handle_process_failed(self):
+        LOG.info('Failed')
 
     # PRIVATE HELPERS
         

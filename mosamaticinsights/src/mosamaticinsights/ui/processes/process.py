@@ -8,7 +8,7 @@ from PySide6.QtCore import (
 
 
 class Process(QObject):
-    progress = Signal(int)
+    progress = Signal(int, int)
     finished = Signal(object)
     failed = Signal(Exception)
     started = Signal()

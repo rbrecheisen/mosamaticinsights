@@ -1,14 +1,14 @@
 @echo off
 
-mamba create -n mosamaticinsights python=3.11 ^
-    poetry ^
-    pyside6 ^
-    numpy ^
-    pandas ^
-    pydicom ^
-    pillow ^
-    matplotlib ^
-    simpleitk -c conda-forge
+@REM mamba create -n mosamaticinsights python=3.11 ^
+@REM     poetry ^
+@REM     pyside6 ^
+@REM     numpy ^
+@REM     pandas ^
+@REM     pydicom ^
+@REM     pillow ^
+@REM     matplotlib ^
+@REM     simpleitk -c conda-forge
 
 @REM mamba activate mosamaticinsights
 @REM poetry config virtualenvs.create false --local

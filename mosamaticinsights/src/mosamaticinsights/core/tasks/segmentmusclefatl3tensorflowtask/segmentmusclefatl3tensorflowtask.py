@@ -20,8 +20,19 @@ class SegmentMuscleFatL3TensorFlowTask(Task):
     INPUTS = ['images', 'model_files']
     PARAMS = ['version', 'probabilities']
 
-    def __init__(self, inputs, output, params, overwrite=True, create_task_subdir=True):
-        super(SegmentMuscleFatL3TensorFlowTask, self).__init__(inputs, output, params, overwrite, create_task_subdir)
+    def __init__(
+        self, 
+        inputs, 
+        output, 
+        params, 
+        progress_callback,
+        failed_callback,
+        overwrite=True, 
+        create_task_subdir=True,
+            
+    ):
+        super(SegmentMuscleFatL3TensorFlowTask, self).__init__(
+            inputs, output, params, progress_callback, failed_callback, overwrite, create_task_subdir)
 
     def load_images(self):
         images = MultiDicomFile(self.input('images'))

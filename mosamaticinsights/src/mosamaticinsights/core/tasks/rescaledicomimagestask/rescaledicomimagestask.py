@@ -13,8 +13,18 @@ class RescaleDicomImagesTask(Task):
     INPUTS = ['images']
     PARAMS = ['target_size']
 
-    def __init__(self, inputs, output, params, overwrite=True, create_task_subdir=True):
-        super(RescaleDicomImagesTask, self).__init__(inputs, output, params, overwrite, create_task_subdir)
+    def __init__(
+        self, 
+        inputs, 
+        output, 
+        params, 
+        progress_callback,
+        failed_callback,
+        overwrite=True, 
+        create_task_subdir=True,
+    ):
+        super(RescaleDicomImagesTask, self).__init__(
+            inputs, output, params, progress_callback, failed_callback, overwrite, create_task_subdir)
 
     def load_images(self):
         images = MultiDicomFile(self.input('images'))
@@ -60,3 +70,4 @@ class RescaleDicomImagesTask(Task):
             else:
                 LOG.warning(f'Shape of pixel data in file {source.path()} should be 2D but is {len(p.pixel_array.shape)}D')
             self.set_progress(step, nr_steps)
+        return self.output()

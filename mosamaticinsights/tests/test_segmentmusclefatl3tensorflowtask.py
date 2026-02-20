@@ -6,7 +6,7 @@ from mosamaticinsights.core.utilities import home, is_macos
 
 PREFIX = f'{home()}/Library/CloudStorage/GoogleDrive-ralph.brecheisen@gmail.com/My Drive'
 if not is_macos():
-    PREFIX = f'{home()}'
+    PREFIX = 'G:\\My Drive'
 
 
 def test_segmentmusclefatl3tensorflow():
@@ -21,6 +21,8 @@ def test_segmentmusclefatl3tensorflow():
             'version': 1.0,
             'probabilities': False,
         },
+        progress_callback=None,
+        failed_callback=None,
     )
     task.run()
     for f in os.listdir(task.input('images')):
