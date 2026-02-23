@@ -38,9 +38,6 @@ class L3AnalysisPage(Page):
         load_images_layout = QHBoxLayout()
         load_images_layout.addWidget(self.load_images_line_edit())
         load_images_layout.addWidget(self.load_images_button())
-        run_layout = QHBoxLayout()
-        run_layout.addWidget(self.run_button())
-        run_layout.addWidget(QLabel('Run analysis'))
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         layout.addLayout(home_button_layout)
@@ -48,7 +45,7 @@ class L3AnalysisPage(Page):
         layout.addLayout(load_model_layout)
         layout.addWidget(QLabel('Load images'))
         layout.addLayout(load_images_layout)
-        layout.addLayout(run_layout)
+        layout.addWidget(self.run_button())
         self.setLayout(layout)
 
     # GETTERS
@@ -84,13 +81,18 @@ class L3AnalysisPage(Page):
     
     def run_button(self):
         if not self._run_button:
-            self._run_button = QPushButton()
-            self._run_button.setFlat(True)
-            self._run_button.setFixedWidth(BUTTON_WIDTH)
-            self._run_button.setIcon(QApplication.style().standardIcon(QStyle.StandardPixmap.SP_ArrowForward))
+            self._run_button = QPushButton('Run analysis')
+            self._run_button.setStyleSheet('background-color: orange; color: white; font-weight: bold;')
+            self._run_button.clicked.connect(self.handle_run_button)
+            # self._run_button.setFlat(True)
+            # self._run_button.setFixedWidth(BUTTON_WIDTH)
+            # self._run_button.setIcon(QApplication.style().standardIcon(QStyle.StandardPixmap.SP_ArrowForward))
         return self._run_button
 
     # EVENT HANDLERS
 
     def handle_home_button(self):
         self.switch_to_page('home')
+
+    def handle_run_button(self):
+        pass
