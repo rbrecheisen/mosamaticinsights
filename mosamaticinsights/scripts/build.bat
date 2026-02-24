@@ -19,6 +19,4 @@ if /I "%BUMP_LEVEL%"=="major" (
 
 python -m build
 
-TWINE_USERNAME=__token__ TWINE_PASSWORD=%TOKEN% python -m twine upload dist/*
-
 endlocal
