@@ -1,3 +1,4 @@
+import os
 import sys
 import pathlib
 import numpy as np
@@ -9,6 +10,29 @@ def home():
 
 def is_macos():
     return sys.platform.lower() == 'darwin'
+
+
+def test_data_dir():
+    data_dir = f'{home()}/Library/CloudStorage/GoogleDrive-ralph.brecheisen@gmail.com/My Drive'
+    if not is_macos():
+        data_dir = 'G:\\My Drive'
+    return data_dir
+
+
+def test_data_l3():
+    return os.path.join(test_data_dir(), 'data/Mosamatic/testdata/L3')
+
+
+def test_data_scans():
+    return os.path.join(test_data_dir(), 'data/Mosamatic/testdata/CT')
+
+
+def tf_l3_model_files():
+    return os.path.join(test_data_dir(), 'data/Mosamatic/models/tensorflow/L3/1.0')
+
+
+def pt_t4_model_files():
+    return os.path.join(test_data_dir(), 'data/Mosamatic/models/pytorch/T4/1.0')
 
 
 def get_rescale_params(p):

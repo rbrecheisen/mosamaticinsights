@@ -28,8 +28,7 @@ class SegmentMuscleFatL3TensorFlowTask(Task):
         progress_callback,
         failed_callback,
         overwrite=True, 
-        create_task_subdir=True,
-            
+        create_task_subdir=True,            
     ):
         super(SegmentMuscleFatL3TensorFlowTask, self).__init__(
             inputs, output, params, progress_callback, failed_callback, overwrite, create_task_subdir)

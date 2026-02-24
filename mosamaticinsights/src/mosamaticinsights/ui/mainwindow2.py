@@ -1,6 +1,7 @@
 from rbeesoft.app.ui import RbeesoftMainWindow
 from mosamaticinsights.ui.widgets.pages.homepage.homepage import HomePage
 from mosamaticinsights.ui.widgets.pages.l3analysispage.l3analysispage import L3AnalysisPage
+from mosamaticinsights.ui.widgets.pages.l3autoselectionpage.l3autoselectionpage import L3AutoSelectionPage
 
 MAJOR_VERSION = 1.0
 
@@ -21,3 +22,5 @@ class MainWindow(RbeesoftMainWindow):
             HomePage('home', 'Home', self.settings()), home_page=True)
         self.add_page(
             L3AnalysisPage('l3analysis', 'L3 analysis', self.settings()))
+        self.add_page(
+            L3AutoSelectionPage('l3autoselection', 'L3 auto-selection', self.settings()))
