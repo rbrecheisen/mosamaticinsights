@@ -17,6 +17,15 @@ if /I "%BUMP_LEVEL%"=="major" (
     bump-my-version bump patch
 )
 
+for /f "usebackq tokens=2 delims== " %%V in (`findstr /R /C:"^[ ]*version[ ]*=" pyproject.toml`) do (
+  set "VERSION=%%~V"
+)
+set "VERSION=%VERSION:"=%"
+
+git add -A
+git commit -m "Deploying version %VERSION%"
+git push
+
 python -m build
 
 endlocal
