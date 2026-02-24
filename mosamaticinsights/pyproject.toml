@@ -58,5 +58,5 @@ serialize = ["{major}.{minor}.{patch}"]
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
-search = 'version = "{current_version}"'
+search = '(?m)^version\\s*=\\s*"{current_version}"\\s*$'
 replace = 'version = "{new_version}"'
