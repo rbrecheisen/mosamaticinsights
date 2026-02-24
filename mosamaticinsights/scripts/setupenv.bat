@@ -1,15 +1,7 @@
 @echo off
 
-call mamba install -c conda-forge ^
-    poetry ^
-    pyside6 ^
-    numpy ^
-    pandas ^
-    pydicom ^
-    pillow ^
-    matplotlib ^
-    simpleitk
+call conda create -n mosamaticinsights python=3.11 pip twine python-build bump-my-version -c conda-forge
 
-call poetry config virtualenvs.create false --local
-call poetry lock
-call poetry install
+@REM call poetry config virtualenvs.create false --local
+@REM call poetry lock
+@REM call poetry install

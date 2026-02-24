@@ -2,12 +2,17 @@
 name = "mosamaticinsights"
 version = "1.0.2"
 description = ""
-authors = [
-    {name = "Brecheisen", email = "r.brecheisen@maastrichtuniversity.nl"}
-]
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
+authors = [{ name = "Brecheisen", email = "r.brecheisen@maastrichtuniversity.nl" }]
+
 dependencies = [
+    "pyside6>=6.6",
+    "pydicom>=3.0.1",
+    "numpy>=1.26.4",
+    "pandas>=2.3.2",
+    "pillow>=11.3.0",
+    "python-gdcm>=3.0.26",
     "rbeesoft>=2.0.20",
     "torch==2.5.1",
     "torchvision>=0.20.1",
@@ -20,22 +25,38 @@ dependencies = [
     "tensorflow-io-gcs-filesystem==0.31.0; platform_system == 'Windows'",
     "tensorflow-io-gcs-filesystem>=0.31.0; platform_system == 'Darwin' and platform_machine == 'arm64'",
     "totalsegmentator>=2.11.0",
-    "pendulum",
+    "pendulum>=3.1.0",
+    "simpleitk>=2.5.2", 
+    "matplotlib",
 ]
 
-[tool.poetry]
-packages = [
-    {include = "mosamaticinsights", from = "src"},
-    {include = "models.py", from = "src" },
-]
-
-[tool.poetry.scripts]
+[project.scripts]
 mosamaticinsights = "mosamaticinsights.main:main"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.4.1"
-pyinstaller = "^6.17.0"
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.4.1",
+  "pyinstaller>=6.17.0",
+]
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+# this is the setuptools replacement for your "models.py" include:
+py-modules = ["models"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.bumpversion]
+current_version = "1.0.2"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'

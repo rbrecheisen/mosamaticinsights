@@ -10,19 +10,15 @@ if /I NOT "%CONFIRM%"=="y" (
 
 set /p BUMP_LEVEL="What version bump level do you want to use? [major, minor, patch (default)] "
 if /I "%BUMP_LEVEL%"=="major" (
-    poetry version major
+    bump-my-version bump major
 ) else if /I "%BUMP_LEVEL%"=="minor" (
-    poetry version minor
+    bump-my-version bump minor
 ) else (
-    poetry version patch
+    bump-my-version bump patch
 )
 
-@REM set /p TOKEN=<"G:\My Drive\data\ApiKeysAndPasswordFiles\pypi-token.txt"
-@REM poetry publish --build --username __token__ --password %TOKEN%
-
-python -m pip install -U build twine
 python -m build
-@REM python -m twine upload dist/*
+
 TWINE_USERNAME=__token__ TWINE_PASSWORD=%TOKEN% python -m twine upload dist/*
 
 endlocal
