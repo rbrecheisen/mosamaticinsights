@@ -26,6 +26,7 @@ class Task:
         self._progress_callback = progress_callback
         self._failed_callback = failed_callback
         self._overwrite = overwrite
+        self._create_task_subdir = create_task_subdir
             
     # GETTERS
 
@@ -40,6 +41,9 @@ class Task:
     
     def overwrite(self):
         return self._overwrite
+    
+    def create_task_subdir(self):
+        return self._create_task_subdir
     
     # PUBLIC METHODS
     

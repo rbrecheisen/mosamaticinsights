@@ -1,7 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (
     QApplication,
-    QLabel, 
     QPushButton,
     QVBoxLayout,
     QHBoxLayout,
@@ -9,8 +8,8 @@ from PySide6.QtWidgets import (
     QFileDialog,
     QStyle,
 )
-from PySide6.QtGui import QFont
 from rbeesoft.app.ui.widgets.pages.page import Page
+from mosamaticinsights.ui.utilities import label
 
 BUTTON_WIDTH = 50
 
@@ -29,9 +28,6 @@ class L3AnalysisPage(Page):
     # INITIALIZATION
 
     def init(self):
-        home_button_layout = QHBoxLayout()
-        home_button_layout.addWidget(self.home_button())
-        home_button_layout.addWidget(QLabel('Go to home'))
         load_model_layout = QHBoxLayout()
         load_model_layout.addWidget(self.load_model_line_edit())
         load_model_layout.addWidget(self.load_model_button())
@@ -40,11 +36,11 @@ class L3AnalysisPage(Page):
         load_images_layout.addWidget(self.load_images_button())
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        layout.addLayout(home_button_layout)
-        layout.addWidget(QLabel('Load segmentation AI model'))
-        layout.addLayout(load_model_layout)
-        layout.addWidget(QLabel('Load images'))
+        layout.addWidget(self.home_button())
+        layout.addWidget(label('Load images', bold=True))
         layout.addLayout(load_images_layout)
+        layout.addWidget(label('Load segmentation AI model', bold=True))
+        layout.addLayout(load_model_layout)
         layout.addWidget(self.run_button())
         self.setLayout(layout)
 
