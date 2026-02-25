@@ -14,7 +14,7 @@ set "MINIFORGE_EXE=%TMP_DIR%\Miniforge3-Windows-x86_64.exe"
 set "CONDA_BAT=%INSTALL_DIR%\condabin\conda.bat"
 mkdir "%TMP_DIR%" 2>nul
 
-echo [0/3] Checking if Miniforge already installed...
+echo Checking if Miniforge already installed...
 if exist %CONDA_BAT% (
   echo Miniforge already installed in %INSTALL_DIR%
   echo Skipping installation...
@@ -22,17 +22,15 @@ if exist %CONDA_BAT% (
 )
 
 if %CONDA_INSTALLED% == "false" (
-  echo [1/3] Downloading Miniforge...
+  echo Downloading Miniforge...
   curl.exe -L --fail --retry 3 --retry-delay 2 -o "%MINIFORGE_EXE%" "%MINIFORGE_URL%"
-  @rem powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  @rem   "try { Invoke-WebRequest -Uri '%MINIFORGE_URL%' -OutFile '%MINIFORGE_EXE%' -UseBasicParsing } catch { exit 1 }"
   if errorlevel 1 (
     echo ERROR: Failed to download Miniforge.
     pause
     exit /b 1
   )
 
-  echo [2/3] Installing Miniforge silently...
+  echo Installing Miniforge silently...
   @rem /S = silent, /D= sets install dir (must be last and not quoted)
   "%MINIFORGE_EXE%" /S /D=%INSTALL_DIR%
   if errorlevel 1 (
@@ -43,8 +41,9 @@ if %CONDA_INSTALLED% == "false" (
 )
 
 echo Initializing conda...
+call "%CONDA_BAT%" config init powershell >nul 2>nul
 call "%CONDA_BAT%" config --set always_yes yes --set changeps1 no >nul 2>nul
-call "%CONDA_BAT%" config --set auto_activate_base false >nul 2>nul
+call "%CONDA_BAT%" config --set auto_activate false >nul 2>nul
 
 echo Creating/refreshing env "%ENV_NAME%" with Python %PYTHON_VERSION%...
 call "%CONDA_BAT%" env remove -n "%ENV_NAME%" >nul 2>nul
