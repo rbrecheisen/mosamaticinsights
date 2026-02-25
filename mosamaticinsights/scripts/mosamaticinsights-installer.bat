@@ -40,10 +40,12 @@ if %CONDA_INSTALLED% == "false" (
   )
 )
 
-echo Initializing conda...
+echo Initializing conda (CONDA_BAT=%CONDA_BAT%)
 call "%CONDA_BAT%" config init powershell >nul 2>nul
 call "%CONDA_BAT%" config --set always_yes yes --set changeps1 no >nul 2>nul
 call "%CONDA_BAT%" config --set auto_activate false >nul 2>nul
+
+pause
 
 echo Creating/refreshing env "%ENV_NAME%" with Python %PYTHON_VERSION%...
 call "%CONDA_BAT%" env remove -n "%ENV_NAME%" >nul 2>nul

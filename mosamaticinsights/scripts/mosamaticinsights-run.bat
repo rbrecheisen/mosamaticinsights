@@ -1,35 +1,3 @@
-@REM @echo off
-@REM setlocal EnableExtensions
-
-@REM @rem configuration
-@REM set "INSTALL_DIR=%LOCALAPPDATA%\Miniforge3"
-@REM set "ENV_NAME=mosamaticinsights"
-@REM set "ENV_DIR=%INSTALL_DIR%\envs\%ENV_NAME%"
-@REM set "APP_EXE=%ENV_DIR%\Scripts\mosamaticinsights.exe"
-@REM set "CONDA_BAT=%INSTALL_DIR%\condabin\conda.bat"
-
-@REM if not exist "%CONDA_BAT%" (
-@REM   echo ERROR: Miniforge not found at "%INSTALL_DIR%".
-@REM   echo Please run the installer first.
-@REM   pause
-@REM   exit /b 1
-@REM )
-
-@REM if not exist "%APP_EXE%" (
-@REM   echo ERROR: "%APP_EXE%" not found.
-@REM   pause
-@REM   exit /b 1
-@REM )
-
-@REM echo Running %ENV_NAME%...
-@REM "%APP_EXE%" %*
-@REM if errorlevel 1 (
-@REM   echo ERROR: Could not run Mosamatic Insights.
-@REM   echo Press any key to continue...
-@REM   pause
-@REM   exit /b 1
-@REM )
-
 @echo off
 setlocal EnableExtensions
 
