@@ -30,7 +30,6 @@ git commit -m "Deploying version %VERSION%"
 git push
 
 python -m build
-
-@REM python -m twine upload dist/*
+python -m twine upload dist/*
 
 endlocal
