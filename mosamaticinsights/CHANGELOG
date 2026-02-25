@@ -1,3 +1,7 @@
+1.0.4
+=====
+- Added installation and run .ps1 scripts
+
 1.0.3
 =====
 - Added bumpversion.py

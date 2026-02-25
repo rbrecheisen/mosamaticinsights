@@ -1,0 +1,1 @@
+conda create -n mosamaticinsights python=3.11 pip twine setuptools wheel python-build tomlkit -c conda-forge
