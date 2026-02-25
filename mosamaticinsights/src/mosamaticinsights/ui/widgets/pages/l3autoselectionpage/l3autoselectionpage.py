@@ -2,7 +2,6 @@ import os
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
     QApplication,
-    QLabel, 
     QPushButton,
     QVBoxLayout,
     QHBoxLayout,
@@ -12,10 +11,8 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QStyle,
 )
-from PySide6.QtGui import QFont
 from rbeesoft.app.ui.widgets.pages.page import Page
 from rbeesoft.common.logmanager import LogManager
-from mosamaticinsights.core.utilities import test_data_scans
 from mosamaticinsights.ui.utilities import label
 
 LOG = LogManager()
