@@ -29,6 +29,7 @@ git add -A
 git commit -m "Deploying version %VERSION%"
 git push
 
+rmdir /s /q dist build src\mosamaticinsights.egg-info
 python -m build
 python -m twine upload dist/*
 
