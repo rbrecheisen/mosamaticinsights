@@ -12,7 +12,6 @@ class SelectSliceFromScansProcess(Process):
             self.output(), 
             self.params(),
             self.progress.emit,
-            # self.finished.emit,
             self.failed.emit,
             overwrite=self.overwrite(),
             create_task_subdir=self.create_task_subdir(),
