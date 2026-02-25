@@ -10,19 +10,27 @@ if /I NOT "%CONFIRM%"=="y" (
 
 set /p BUMP_LEVEL="What version bump level do you want to use? [major, minor, patch (default)] "
 if /I "%BUMP_LEVEL%"=="major" (
-    poetry version major
+    python scripts\bumpversion.py --part major --update_toml 1
 ) else if /I "%BUMP_LEVEL%"=="minor" (
-    poetry version minor
+    python scripts\bumpversion.py --part minor --update_toml 1
 ) else (
-    poetry version patch
+    python scripts\bumpversion.py --part patch --update_toml 1
 )
 
-@REM set /p TOKEN=<"G:\My Drive\data\ApiKeysAndPasswordFiles\pypi-token.txt"
-@REM poetry publish --build --username __token__ --password %TOKEN%
+set /p VERSION=<VERSION
+echo New version: %VERSION%. Is this correct?
+pause
 
-python -m pip install -U build twine
+set /p TOKEN=<"G:\My Drive\data\ApiKeysAndPasswordFiles\pypi-token.txt"
+set "TWINE_USERNAME=__token__"
+set "TWINE_PASSWORD=%TOKEN%"
+
+git add -A
+git commit -m "Deploying version %VERSION%"
+git push
+
 python -m build
+
 @REM python -m twine upload dist/*
-TWINE_USERNAME=__token__ TWINE_PASSWORD=%TOKEN% python -m twine upload dist/*
 
 endlocal

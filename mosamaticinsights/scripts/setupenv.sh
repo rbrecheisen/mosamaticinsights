@@ -1,15 +1,3 @@
 #!/bin/bash
 
-mamba install -c conda-forge \
-    poetry \
-    pyside6 \
-    numpy \
-    pandas \
-    pydicom \
-    pillow \
-    matplotlib \
-    simpleitk
-
-poetry config virtualenvs.create false --local
-poetry lock
-poetry install
+conda create -n mosamaticinsights python=3.11 pip twine python-build -c conda-forge

@@ -1,6 +1,6 @@
 [project]
 name = "mosamaticinsights"
-version = "1.0.2"
+version = "1.0.3"
 description = ""
 readme = "README.md"
 requires-python = ">=3.11,<3.12"
@@ -50,13 +50,3 @@ py-modules = ["models"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
-[tool.bumpversion]
-current_version = "1.0.2"
-parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
-serialize = ["{major}.{minor}.{patch}"]
-
-[[tool.bumpversion.files]]
-filename = "pyproject.toml"
-search = '(?m)^version\\s*=\\s*"{current_version}"\\s*$'
-replace = 'version = "{new_version}"'
