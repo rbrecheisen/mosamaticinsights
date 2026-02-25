@@ -39,7 +39,7 @@ class MainWindow(RbeesoftMainWindow):
 
     def init(self):
         page = self.page('l3autoselection')
-        page.start_process.connect(self.handle_l3autoselection_process)
+        page.start_process.connect(self.handle_l3autoselection_start_process)
 
     # GETTERS
 
@@ -50,7 +50,7 @@ class MainWindow(RbeesoftMainWindow):
 
     # EVENT HANDLERS
 
-    def handle_l3autoselection_process(self, inputs, output, params, overwrite, create_task_subdir):
+    def handle_l3autoselection_start_process(self, inputs, output, params, overwrite, create_task_subdir):
         process = SelectSliceFromScansProcess(inputs, output, params, overwrite, create_task_subdir)
         process.progress.connect(self.handle_progress)
         process.finished.connect(self.handle_finished)

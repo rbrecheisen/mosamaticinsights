@@ -25,6 +25,7 @@ BUTTON_WIDTH = 50
 class L3AutoSelectionPage(Page):
     # Use this signal to notify main window that process should start
     start_process = Signal(dict, str, dict, bool, bool)
+    cancel_process = Signal()
 
     def __init__(self, name, title, settings):
         super(L3AutoSelectionPage, self).__init__(name, title, settings)
@@ -163,7 +164,7 @@ class L3AutoSelectionPage(Page):
         self.start_process.emit(
             {'scans': scans_dir}, output_dir, {'vertebra': vertebra}, overwrite, create_task_subdir)
         self.view_output_dir_button().setEnabled(True)
-        
+
     def handle_view_output_dir_button(self):
         output_dir = self.output_dir_line_edit().text()
         if self.create_task_subdir_checkbox().isChecked():
