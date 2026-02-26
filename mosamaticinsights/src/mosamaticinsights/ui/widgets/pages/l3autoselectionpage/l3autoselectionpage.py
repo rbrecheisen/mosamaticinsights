@@ -128,6 +128,15 @@ class L3AutoSelectionPage(Page):
             self._view_output_dir_button.clicked.connect(self.handle_view_output_dir_button)
         return self._view_output_dir_button
     
+    # HELPERS
+
+    def save_settings(self):
+        self.settings().set('l3autoselection/vertebra', self.vertebra_combobox().currentText())
+        self.settings().set('l3autoselection/output_dir', self.output_dir_line_edit().text())
+        self.settings().set('l3autoselection/scans_dir', self.scans_dir_line_edit().text())
+        self.settings().set('l3autoselection/overwrite', self.overwrite_checkbox().isChecked())
+        self.settings().set('l3autoselection/create_task_subdir', self.create_task_subdir_checkbox().isChecked())
+    
     # EVENT HANDLERS
 
     def handle_home_button(self):
@@ -148,18 +157,14 @@ class L3AutoSelectionPage(Page):
             self.settings().set('l3autoselection/last_direcory', dir_path)
 
     def handle_run_button(self):
-        scans_dir = self.scans_dir_line_edit().text()
-        output_dir = self.output_dir_line_edit().text()
-        vertebra = self.vertebra_combobox().currentText()
-        overwrite = self.overwrite_checkbox().isChecked()
-        create_task_subdir = self.create_task_subdir_checkbox().isChecked()
-        self.settings().set('l3autoselection/vertebra', vertebra)
-        self.settings().set('l3autoselection/output_dir', output_dir)
-        self.settings().set('l3autoselection/scans_dir', scans_dir)
-        self.settings().set('l3autoselection/overwrite', overwrite)
-        self.settings().set('l3autoselection/create_task_subdir', create_task_subdir)
+        self.save_settings()
         self.start_process.emit(
-            {'scans': scans_dir}, output_dir, {'vertebra': vertebra}, overwrite, create_task_subdir)
+            {'scans': self.scans_dir_line_edit().text()}, 
+            self.output_dir_line_edit().text(), 
+            {'vertebra': self.vertebra_combobox().currentText()}, 
+            self.overwrite_checkbox().isChecked(), 
+            self.create_task_subdir_checkbox().isChecked(),
+        )
         self.view_output_dir_button().setEnabled(True)
 
     def handle_view_output_dir_button(self):
